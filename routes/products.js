@@ -1,6 +1,6 @@
 /*
-    Event Routes
-    /api/events
+    Productos Routes
+    /api/products
 */
 const { Router } = require('express');
 const { check } = require('express-validator');

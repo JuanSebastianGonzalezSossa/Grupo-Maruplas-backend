@@ -1,28 +1,39 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Number } = require('mongoose');
 
 const ProductoSchema = Schema({
 
-    title: {
+    nombre: {
         type: String,
         required: true
     },
-    notes: {
+    imagen: {
         type: String,        
     },
-    start: {
-        type: Date,
+    cantidad: {
+        type: Number,
         required: true
     },
-    end: {
-        type: Date,
+    precio: {
+        type: Number,
         required: true
+    },
+    descripcion: {
+        type: String,
+        required: true
+    },
+    referencia: {
+        type: String,
+        required: true
+    },
+    fechaCreate: {
+        type: Date,
+        default: Date.now
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
     }
-
 });
 
 ProductoSchema.method('toJSON', function() {
@@ -33,5 +44,5 @@ ProductoSchema.method('toJSON', function() {
 
 
 
-module.exports = model('Evento', ProductoSchema );
+module.exports = model('Producto', ProductoSchema );
 
