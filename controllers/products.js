@@ -24,7 +24,7 @@ const crearProducto = async (req, res = response) => {
 
         res.json({
             ok: true,
-            evento: productoGuardado
+            producto: productoGuardado
         })
 
 
@@ -49,14 +49,14 @@ const actualizarProducto = async (req, res = response) => {
         if (!producto) {
             return res.status(404).json({
                 ok: false,
-                msg: 'Evento no existe por ese id'
+                msg: 'Producto no existe por ese id'
             });
         }
 
         if (producto.user.toString() !== uid) {
             return res.status(401).json({
                 ok: false,
-                msg: 'No tiene privilegio de editar este evento'
+                msg: 'No tiene privilegio de editar este Producto'
             });
         }
 
@@ -69,7 +69,7 @@ const actualizarProducto = async (req, res = response) => {
 
         res.json({
             ok: true,
-            evento: productoActualizado
+            producto: productoActualizado
         });
 
 
@@ -90,24 +90,24 @@ const eliminarProducto = async (req, res = response) => {
 
     try {
 
-        const producto = await Producto.findById(eventoId);
+        const producto = await Producto.findById(productoId);
 
         if (!producto) {
             return res.status(404).json({
                 ok: false,
-                msg: 'Evento no existe por ese id'
+                msg: 'Producto no existe por ese id'
             });
         }
 
         if (producto.user.toString() !== uid) {
             return res.status(401).json({
                 ok: false,
-                msg: 'No tiene privilegio de eliminar este evento'
+                msg: 'No tiene privilegio de eliminar este producto'
             });
         }
 
 
-        await Producto.findByIdAndDelete(eventoId);
+        await Producto.findByIdAndDelete(productoId);
 
         res.json({ ok: true });
 

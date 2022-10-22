@@ -21,8 +21,10 @@ app.use( express.json() );
 // Rutas
 app.use('/api/auth', require('./routes/auth') );
 app.use('/api/products', require('./routes/products') );
-
-
+app.use('/api/customers', require('./routes/customers') );
+// app.use('/api/orders', require('./routes/orders') );
+// app.use('/api/routes', require('./routes/routes') );
+// app.use('/api/sales', require('./routes/sales') );
 
 
 // Escuchar peticiones
