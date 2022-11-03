@@ -22,8 +22,7 @@ app.use( express.json() );
 app.use('/api/auth', require('./routes/auth') );
 app.use('/api/products', require('./routes/products') );
 app.use('/api/customers', require('./routes/customers') );
-// app.use('/api/orders', require('./routes/orders') );
-// app.use('/api/routes', require('./routes/routes') );
+app.use('/api/rutas', require('./routes/rutas') );
 // app.use('/api/sales', require('./routes/sales') );
 
 

@@ -14,25 +14,44 @@ const getProductos = async (req, res = response) => {
 
 const crearProducto = async (req, res = response) => {
 
-    const producto = new Producto(req.body);
+    const { referncia } = req.body;
 
     try {
+        let producto = await Producto.findOne({ referncia });
 
-        producto.user = req.uid;
+        if (producto) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El producto ya existe'
+            });
+        }
 
-        const productoGuardado = await producto.save();
+        producto = new Producto(req.body);
 
-        res.json({
-            ok: true,
-            producto: productoGuardado
-        })
+        try {
+
+            producto.user = req.uid;
+
+            const productoGuardado = await producto.save();
+
+            res.json({
+                ok: true,
+                producto: productoGuardado
+            })
 
 
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                ok: false,
+                msg: 'Hable con el administrador'
+            });
+        }
     } catch (error) {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: 'Hable con el administrador'
+            msg: 'Por favor hable con el administrador'
         });
     }
 }

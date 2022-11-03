@@ -23,7 +23,8 @@ const ProductoSchema = Schema({
     },
     referencia: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     fechaCreate: {
         type: Date,

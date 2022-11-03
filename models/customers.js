@@ -26,6 +26,11 @@ const CustomerSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
+    }, 
+    ruta: {
+        type: Schema.Types.ObjectId,
+        ref: 'rutas',   
+        required: true
     }
 });
 
