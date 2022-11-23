@@ -4,18 +4,22 @@
 */
 
 const { Router } = require('express');
-const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth');
+const { crearUsuario, loginUsuario, revalidarToken, getUsuarios } = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validateAuth, validateLogin } = require('../validators/auth');
 
 const router = Router();
 
-
+router.get(
+    '/',
+    getUsuarios
+);
 
 router.post(
     '/new',
     //Validamos los campos para crear un usuario
     validateAuth,
+    validarJWT,
     crearUsuario
 );
 

@@ -14,6 +14,11 @@ const UsuarioSchema = Schema({
         required: true,
         unique: true
     },
+    celular: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     password: {
         type: String,
         required: true

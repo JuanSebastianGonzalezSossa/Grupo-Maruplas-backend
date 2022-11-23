@@ -10,15 +10,17 @@ const validateAuth = [
         .exists()
         .not()
         .isEmpty(),
-    check('email', 'El email no es valido')
+    check('celular', 'El celular no es valido')
         .exists()
+        .isMobilePhone(),
+    check('email', 'El email no es valido')
         .isEmail(),
     check('password', 'Minimo 8 caracteres Maximo 15 Al menos una letra mayúscula Al menos una letra minucula Al menos un dígito No espacios en blanco Al menos 1 caracter especial')
         .exists()
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/),
-        (req, res, next) => {
-            validarCampos(req, res, next)
-        }
+    (req, res, next) => {
+        validarCampos(req, res, next)
+    }
 ]
 
 const validateLogin = [
@@ -28,9 +30,9 @@ const validateLogin = [
     check('password', 'Minimo 8 caracteres Maximo 15 Al menos una letra mayúscula Al menos una letra minucula Al menos un dígito No espacios en blanco Al menos 1 caracter especial')
         .exists()
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/),
-        (req, res, next) => {
-            validarCampos(req, res, next)
-        }
+    (req, res, next) => {
+        validarCampos(req, res, next)
+    }
 ]
 
 module.exports = {

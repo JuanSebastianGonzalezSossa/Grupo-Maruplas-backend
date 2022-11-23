@@ -2,7 +2,11 @@ const { Schema, model, Number } = require('mongoose')
 
 const CustomerSchema = Schema({
 
-    nombre: {
+    nombres: {
+        type: String,
+        required: true
+    }, 
+    apellidos: {
         type: String,
         required: true
     }, 
@@ -12,26 +16,25 @@ const CustomerSchema = Schema({
     },
     celular: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     correo: {
         type: String,
-        required: true
+        required: true,
     },
-    descripcion: {
-        type: String,
-        required: true
-    },
+
     user: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
-    }, 
-    ruta: {
-        type: Schema.Types.ObjectId,
-        ref: 'rutas',   
-        required: true
     }
+});
+
+CustomerSchema.method('toJSON', function() {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
 });
 
 module.exports = model('Customer', CustomerSchema );

@@ -14,25 +14,44 @@ const getCustomers = async (req, res = response) => {
 
 const crearCustomers = async (req, res = response) => {
 
-    const customer = new Customer(req.body);
-    
+    const { celular } = req.body;
+
     try {
+        let customer = await Customer.findOne({ celular });
 
-        customer.user = req.uid;
+        if (customer) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El producto ya existe'
+            });
+        }
 
-        const customerSave = await customer.save();
+        customer = new Customer(req.body);
 
-        res.json({
-            ok: true,
-            customer: customerSave
-        })
+        try {
+
+            customer.user = req.uid;
+
+            const customerGuardado = await customer.save();
+
+            res.json({
+                ok: true,
+                producto: customerGuardado
+            })
 
 
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                ok: false,
+                msg: 'Hable con el administrador'
+            });
+        }
     } catch (error) {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: 'Hable con el administrador'
+            msg: 'Por favor hable con el administrador'
         });
     }
 }
@@ -69,7 +88,7 @@ const actualizarCustomer = async (req, res = response) => {
 
         res.json({
             ok: true,
-            evento: customerActualizado
+            customer: customerActualizado
         });
 
 
@@ -90,7 +109,7 @@ const eliminarCustomer = async (req, res = response) => {
 
     try {
 
-        const customer = await Customer.findById(eventoId);
+        const customer = await Customer.findById(customerId);
 
         if (!customer) {
             return res.status(404).json({

@@ -8,7 +8,8 @@ const rutasSchema = Schema({
     }, 
     ciudad: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     descripcion: {
         type: String,
@@ -19,6 +20,12 @@ const rutasSchema = Schema({
         ref: 'Usuario',
         required: true
     }
+});
+
+rutasSchema.method('toJSON', function() {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
 });
 
 module.exports = model('Rutas', rutasSchema );

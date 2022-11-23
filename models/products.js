@@ -6,7 +6,7 @@ const ProductoSchema = Schema({
         type: String,
         required: true
     },
-    imagen: {
+    imagenURL: {
         type: String,        
     },
     cantidad: {

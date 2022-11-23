@@ -4,7 +4,7 @@ const Ruta = require('../models/rutas');
 const getRutas = async (req, res = response) => {
 
     const rutas = await Ruta.find()
-        .populate('user', 'name');
+        .populate('user');
 
     res.json({
         ok: true,
@@ -14,25 +14,44 @@ const getRutas = async (req, res = response) => {
 
 const crearRutas = async (req, res = response) => {
 
-    const ruta = new Ruta(req.body);
+    const { ciudad } = req.body;
 
     try {
+        let ruta = await Ruta.findOne({ ciudad });
 
-        ruta.user = req.uid;
+        if (ruta) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'La ruta ya existe'
+            });
+        }
 
-        const RutaGuardado = await Ruta.save();
+        ruta = new Ruta(req.body);
 
-        res.json({
-            ok: true,
-            ruta: RutaGuardado
-        })
+        try {
+
+            ruta.user = req.uid;
+
+            const rutaGuardado = await ruta.save();
+
+            res.json({
+                ok: true,
+                ruta: rutaGuardado
+            })
 
 
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                ok: false,
+                msg: 'Hable con el administrador'
+            });
+        }
     } catch (error) {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: 'Hable con el administrador'
+            msg: 'Por favor hable con el administrador'
         });
     }
 }
@@ -106,8 +125,7 @@ const eliminarRuta = async (req, res = response) => {
             });
         }
 
-
-        await Ruta.findByIdAndUpdate(rutaId);
+        await Ruta.findByIdAndDelete(rutaId);
 
         res.json({ ok: true });
 
