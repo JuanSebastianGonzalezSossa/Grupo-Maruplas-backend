@@ -106,6 +106,7 @@ const eliminarCustomer = async (req, res = response) => {
 
     const customerId = req.params.id;
     const uid = req.uid;
+    
 
     try {
 

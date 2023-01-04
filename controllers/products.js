@@ -4,7 +4,7 @@ const Producto = require('../models/products');
 const getProductos = async (req, res = response) => {
 
     const productos = await Producto.find()
-        .populate('user', 'name');
+        .populate('user', 'referencia');
 
     res.json({
         ok: true,
@@ -14,10 +14,10 @@ const getProductos = async (req, res = response) => {
 
 const crearProducto = async (req, res = response) => {
 
-    const { referncia } = req.body;
+    const { referencia } = req.body;
 
     try {
-        let producto = await Producto.findOne({ referncia });
+        let producto = await Producto.findOne({ referencia });
 
         if (producto) {
             return res.status(400).json({
@@ -72,12 +72,12 @@ const actualizarProducto = async (req, res = response) => {
             });
         }
 
-        if (producto.user.toString() !== uid) {
-            return res.status(401).json({
-                ok: false,
-                msg: 'No tiene privilegio de editar este Producto'
-            });
-        }
+        // if (producto.user.toString() !== uid) {
+        //     return res.status(401).json({
+        //         ok: false,
+        //         msg: 'No tiene privilegio de editar este Producto'
+        //     });
+        // }
 
         const nuevoProducto = {
             ...req.body,
@@ -86,9 +86,13 @@ const actualizarProducto = async (req, res = response) => {
 
         const productoActualizado = await Producto.findByIdAndUpdate(productoId, nuevoProducto, { new: true });
 
+        const productos = await Producto.find()
+        .populate('user', 'referencia');
+
         res.json({
             ok: true,
-            producto: productoActualizado
+            producto: productoActualizado,
+            productos
         });
 
 
@@ -127,8 +131,10 @@ const eliminarProducto = async (req, res = response) => {
 
 
         await Producto.findByIdAndDelete(productoId);
+        const productos = await Producto.find()
+        .populate('user', 'name');
 
-        res.json({ ok: true });
+        res.json({ ok: true, productos });
 
 
     } catch (error) {

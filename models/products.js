@@ -7,7 +7,8 @@ const ProductoSchema = Schema({
         required: true
     },
     imagenURL: {
-        type: String,        
+        type: String,
+        required: true        
     },
     cantidad: {
         type: Number,

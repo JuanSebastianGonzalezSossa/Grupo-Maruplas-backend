@@ -4,7 +4,7 @@
 */
 
 const { Router } = require('express');
-const { crearUsuario, loginUsuario, revalidarToken, getUsuarios } = require('../controllers/auth');
+const { crearUsuario, loginUsuario, revalidarToken, getUsuarios, actualizarUsuario, eliminarUsuario } = require('../controllers/auth');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validateAuth, validateLogin } = require('../validators/auth');
 
@@ -22,6 +22,11 @@ router.post(
     validarJWT,
     crearUsuario
 );
+
+router.put('/:id', actualizarUsuario);
+
+// Borrar Cliente
+router.delete('/:id', eliminarUsuario);
 
 router.post(
     '/',

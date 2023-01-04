@@ -98,6 +98,81 @@ const loginUsuario = async(req, res = response ) => {
 
 }
 
+const actualizarUsuario = async (req, res = response) => {
+
+    const usuarioId = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const usuario = await Usuario.findById(usuarioId);
+
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'usuario no existe por ese id'
+            });
+        }
+
+        const nuevoUsuario = {
+            ...req.body,
+            user: uid
+        }
+
+        const UsuarioActualiado = await Usuario.findByIdAndUpdate(usuarioId, nuevoUsuario, { new: true });
+
+         const usuarios = await Usuario.find()
+        .populate('correo');
+
+        res.json({
+            ok: true,
+            usuario: UsuarioActualiado,
+            usuarios
+        });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+}
+
+const eliminarUsuario = async (req, res = response) => {
+
+    const usuarioId = req.params.id;
+
+    try {
+
+        const usuario = await Usuario.findById(usuarioId);
+
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'usuario no existe por ese id'
+            });
+        }
+
+
+        await Usuario.findByIdAndDelete(usuarioId);
+        const usuarios = await Usuario.find()
+        .populate('correo');
+
+        res.json({ ok: true, usuarios });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+}
+
 
 const revalidarToken = async (req, res = response ) => {
 
@@ -117,5 +192,7 @@ module.exports = {
     crearUsuario,
     loginUsuario,
     revalidarToken,
-    getUsuarios
+    getUsuarios,
+    actualizarUsuario,
+    eliminarUsuario
 }

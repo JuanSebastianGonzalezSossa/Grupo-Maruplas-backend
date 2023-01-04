@@ -15,12 +15,12 @@ const validateProductos = [
         .exists()
         .isNumeric(),
     check('precio', 'El precio puede tener maximo 3 caracteres')
-        .isLength({ max: 9 }),
+        .isLength({ max: 12 }),
     check('descripcion', 'La descripción no puede estar varcia')
         .exists()
         .not()
         .isEmpty(),
-    check('referencia', 'La descripción no puede estar varcia')
+    check('referencia', 'La referencia no puede estar varcia')
         .exists()
         .not()
         .isEmpty(),
