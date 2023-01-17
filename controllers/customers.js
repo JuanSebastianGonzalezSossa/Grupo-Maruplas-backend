@@ -36,7 +36,7 @@ const crearCustomers = async (req, res = response) => {
 
             res.json({
                 ok: true,
-                producto: customerGuardado
+                customer: customerGuardado
             })
 
 
@@ -128,8 +128,9 @@ const eliminarCustomer = async (req, res = response) => {
 
 
         await Customer.findByIdAndDelete(customerId);
-
-        res.json({ ok: true });
+        const customers = await Customer.find()
+        .populate('user', 'name');
+        res.json({ ok: true, customers });
 
 
     } catch (error) {

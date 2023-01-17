@@ -20,6 +20,8 @@ router.post('/', validateProductos, crearProducto);
 // Actualizar Evento
 router.put('/:id', validateProductos, actualizarProducto);
 
+router.put('/uno/:id', actualizarProducto);
+
 // Borrar evento
 router.delete('/:id', eliminarProducto);
 

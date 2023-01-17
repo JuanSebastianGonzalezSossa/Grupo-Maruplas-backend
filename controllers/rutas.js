@@ -126,8 +126,10 @@ const eliminarRuta = async (req, res = response) => {
         }
 
         await Ruta.findByIdAndDelete(rutaId);
+        const rutas = await Ruta.find()
+        .populate('user');
 
-        res.json({ ok: true });
+        res.json({ ok: true, rutas });
 
 
     } catch (error) {
