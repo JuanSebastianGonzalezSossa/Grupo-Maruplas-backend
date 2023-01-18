@@ -19,6 +19,11 @@ const UsuarioSchema = Schema({
         required: true,
         unique: true
     },
+    acumulado: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
     password: {
         type: String,
         required: true
