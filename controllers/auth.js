@@ -84,6 +84,7 @@ const loginUsuario = async(req, res = response ) => {
             ok: true,
             uid: usuario.id,
             name: usuario.name,
+            rol: usuario.rol,
             token
         })
 
